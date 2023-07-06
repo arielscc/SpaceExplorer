@@ -13,6 +13,9 @@ import Gallery from '../screens/Gallery';
 import Home from '../screens/Home';
 import Space from '../screens/Space';
 import Weather from '../screens/Weather';
+import {Colors} from '../ui/colors';
+import {navStyles} from './styles';
+import {MAIN_SCREENS} from './types';
 
 const Tab = createBottomTabNavigator();
 
@@ -23,22 +26,30 @@ const TabNavigator = () => {
       safeAreaInsets={{bottom, top}}
       initialRouteName="Home"
       screenOptions={({route}) => ({
-        tabBarIcon: () => {
-          const icons = {
-            Home: <HomeIcon />,
-            Gallery: <GalleryIcon />,
-            Events: <EventsIcon />,
-            Weather: <WeatherIcon />,
-            Space: <SpaceIcon />,
+        tabBarIcon: ({color, size}) => {
+          const icons: Record<MAIN_SCREENS, React.JSX.Element> = {
+            [MAIN_SCREENS.HOME]: <HomeIcon color={color} fontSize={size} />,
+            [MAIN_SCREENS.GALLERY]: <GalleryIcon color={color} />,
+            [MAIN_SCREENS.EVENTS]: <EventsIcon color={color} />,
+            [MAIN_SCREENS.WEATHER]: <WeatherIcon color={color} />,
+            [MAIN_SCREENS.SPACE]: <SpaceIcon color={color} />,
           };
-          return icons[route.name as keyof typeof icons];
+          return icons[route.name as MAIN_SCREENS];
+        },
+        tabBarActiveTintColor: Colors.dark,
+        tabBarInactiveTintColor: Colors.ceruleanlight,
+        tabBarAllowFontScaling: true,
+        headerTitleAllowFontScaling: true,
+        tabBarStyle: navStyles.tabBarStyle,
+        tabBarLabelStyle: {
+          fontSize: 12,
         },
       })}>
-      <Tab.Screen name="Events" component={Events} />
-      <Tab.Screen name="Gallery" component={Gallery} />
-      <Tab.Screen name="Home" component={Home} />
-      <Tab.Screen name="Space" component={Space} />
-      <Tab.Screen name="Weather" component={Weather} />
+      <Tab.Screen name={MAIN_SCREENS.EVENTS} component={Events} />
+      <Tab.Screen name={MAIN_SCREENS.GALLERY} component={Gallery} />
+      <Tab.Screen name={MAIN_SCREENS.HOME} component={Home} />
+      <Tab.Screen name={MAIN_SCREENS.SPACE} component={Space} />
+      <Tab.Screen name={MAIN_SCREENS.WEATHER} component={Weather} />
     </Tab.Navigator>
   );
 };
