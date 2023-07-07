@@ -1,0 +1,89 @@
+{
+  "env": {
+    "browser": true,
+    "node": true,
+    "es2021": true,
+    "jest": true
+  },
+  "extends": [
+    // "@react-native-community",
+    "plugin:react/recommended",
+    "eslint:recommended",
+    "standard",
+    "plugin:prettier/recommended",
+    "prettier",
+    "plugin:@typescript-eslint/recommended"
+  ],
+  "ignorePatterns": [
+    ".vscode/**/*",
+    "android/**/*",
+    "assets/**/*",
+    "ios/**/*",
+    "node_modules/**/*",
+    "src/assets/**/*"
+  ],
+  "parser": "@typescript-eslint/parser",
+  "parserOptions": {
+    "ecmaFeatures": {
+      "jsx": true,
+      "tsx": true
+    },
+    "ecmaVersion": "latest",
+    "sourceType": "module"
+  },
+  "plugins": ["react", "@typescript-eslint", "prettier"],
+  "rules": {
+    "consistent-return": "error",
+    "eqeqeq": ["error", "smart"],
+    "@typescript-eslint/no-explicit-any": "error",
+    "no-extra-parens": "error",
+    "accessor-pairs": [
+      "error",
+      {
+        "getWithoutSet": false,
+        "setWithoutGet": true
+      }
+    ],
+    "block-scoped-var": "warn",
+    "no-else-return": "warn",
+    "no-multi-spaces": "error",
+    "no-use-before-define": "error",
+    "no-unused-expressions": "warn",
+    "arrow-spacing": [
+      "error",
+      {
+        "before": true,
+        "after": true
+      }
+    ],
+    "block-spacing": ["warn", "always"],
+    "camelcase": "warn",
+    "comma-spacing": [
+      "warn",
+      {
+        "before": false,
+        "after": true
+      }
+    ],
+    "comma-style": ["warn", "last"],
+    "no-multiple-empty-lines": "warn",
+    "prettier/prettier": "error",
+    "quotes": ["warn", "single", {"allowTemplateLiterals": true}],
+    "space-before-blocks": ["warn", "always"],
+    "semi": ["error", "always"],
+    "keyword-spacing": "error",
+    "no-duplicate-imports": "error",
+    "no-self-compare": "error"
+  },
+  "settings": {
+    "import/resolver": {
+      "node": {
+        "extensions": [".js", ".jsx", ".ts", ".tsx"],
+        "moduleDirectory": ["node_modules", "src/"]
+      }
+    },
+    "react": {
+      "version": "detect"
+    }
+  }
+}
