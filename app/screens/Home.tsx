@@ -1,11 +1,12 @@
 import React from 'react';
-import {Text, View} from 'react-native';
+import {ScrollView} from 'react-native';
+import DailyImage from '../components/DailyImage';
 
 const Home = () => {
   return (
-    <View>
-      <Text>Home</Text>
-    </View>
+    <ScrollView>
+      <DailyImage />
+    </ScrollView>
   );
 };
 

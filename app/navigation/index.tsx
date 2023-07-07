@@ -36,8 +36,8 @@ const TabNavigator = () => {
           };
           return icons[route.name as MAIN_SCREENS];
         },
-        tabBarActiveTintColor: Colors.dark,
-        tabBarInactiveTintColor: Colors.ceruleanlight,
+        tabBarActiveTintColor: Colors.berkeleystrong,
+        tabBarInactiveTintColor: Colors.cerulean,
         tabBarAllowFontScaling: true,
         headerTitleAllowFontScaling: true,
         tabBarStyle: navStyles.tabBarStyle,
