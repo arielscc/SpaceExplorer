@@ -1,11 +1,12 @@
 import React from 'react';
-import {Text, View} from 'react-native';
+import {ScrollView} from 'react-native';
+import WorldEvents from '../components/WorldEvents';
 
 const Events = () => {
   return (
-    <View>
-      <Text>Events</Text>
-    </View>
+    <ScrollView>
+      <WorldEvents />
+    </ScrollView>
   );
 };
 
