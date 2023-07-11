@@ -41,6 +41,7 @@ const TabNavigator = () => {
         tabBarAllowFontScaling: true,
         headerTitleAllowFontScaling: true,
         tabBarStyle: navStyles.tabBarStyle,
+        header: () => null,
         tabBarLabelStyle: {
           fontSize: 12,
         },
