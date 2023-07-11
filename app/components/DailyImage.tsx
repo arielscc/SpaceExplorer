@@ -49,116 +49,134 @@ const DailyImage = () => {
     [],
   );
 
-  const toggleNumberOfLines = () => {
-    //To toggle the show text or hide it
-    setTextShown(!textShown);
-  };
-
   return (
-    <View
-      style={{
-        backgroundColor: Colors.white,
-        margin: 16,
-        padding: 16,
-        borderRadius: 8,
-        shadowColor: Colors.black,
-        shadowOffset: {
-          width: 0,
-          height: 4,
-        },
-        shadowOpacity: 0.1,
-        shadowRadius: 4,
-        elevation: 4,
-      }}>
-      {dailyImage && (
-        <>
-          <Text
-            style={{
-              fontSize: 22,
-              fontWeight: 'bold',
-            }}>
-            {dailyImage.title}
-          </Text>
-          <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
-            <Text
-              style={{
-                fontSize: 14,
-                fontWeight: '300',
-                marginTop: 4,
-              }}>
+    <View>
+      <View style={DailyImageStyles.container}>
+        <Text style={DailyImageStyles.title}>Daily Image</Text>
+        <Text style={DailyImageStyles.subtitle}>
+          NASA's Astronomy Picture of the Day
+        </Text>
+      </View>
+      <View style={DailyImageStyles.cardContainer}>
+        {dailyImage && (
+          <>
+            <Text style={DailyImageStyles.cardTitle}>{dailyImage.title}</Text>
+            <Text style={DailyImageStyles.cardDate}>
               {formatDate(new Date(dailyImage.date))}
             </Text>
-          </View>
+            <Pressable onPress={() => setImageVisible(true)}>
+              <Image
+                source={{uri: dailyImage.url}}
+                style={DailyImageStyles.cardImage}
+                accessible
+                accessibilityLabel={`daily image: ${dailyImage.title}`}
+                loadingIndicatorSource={{
+                  cache: 'force-cache',
+                }}
+              />
+            </Pressable>
+            {imageVisible && (
+              <EnhancedImageViewing
+                images={[
+                  {
+                    uri: dailyImage.url,
+                  },
+                ]}
+                imageIndex={0}
+                visible={imageVisible}
+                onRequestClose={() => setImageVisible(false)}
+                animationType="slide"
+                backgroundColor={Colors.dark}
+                doubleTapToZoomEnabled
+              />
+            )}
 
-          <Pressable onPress={() => setImageVisible(true)}>
-            <Image
-              source={{uri: dailyImage.url}}
-              style={{height: 200, marginTop: 16, marginHorizontal: -16}}
-              accessible
-              accessibilityLabel={`daily image: ${dailyImage.title}`}
-              loadingIndicatorSource={{
-                cache: 'force-cache',
-              }}
-            />
-          </Pressable>
-          {imageVisible && (
-            <EnhancedImageViewing
-              images={[
-                {
-                  uri: dailyImage.url,
-                },
-              ]}
-              imageIndex={0}
-              visible={imageVisible}
-              onRequestClose={() => setImageVisible(false)}
-              animationType="slide"
-              backgroundColor={Colors.dark}
-              doubleTapToZoomEnabled
-            />
-          )}
-
-          <View>
-            <Text
-              style={{
-                marginTop: 16,
-                fontSize: 16,
-                fontWeight: '300',
-              }}
-              numberOfLines={textShown ? undefined : 3}
-              onTextLayout={onTextLayout}>
-              {dailyImage.explanation}
-            </Text>
-            {lengthMore ? (
-              <TouchableOpacity
-                onPress={toggleNumberOfLines}
-                activeOpacity={0.4}>
-                <Text
-                  style={{
-                    lineHeight: 21,
-                    marginTop: 2,
-                    fontWeight: 'bold',
-                    color: Colors.berkeley,
-                  }}>
-                  {textShown ? 'Read less' : 'Read more'}
-                </Text>
-              </TouchableOpacity>
-            ) : null}
-            <Text
-              style={{
-                fontSize: 14,
-                fontWeight: '300',
-                marginTop: 2,
-                textAlign: 'right',
-              }}>
-              created by: {dailyImage.copyright}
-            </Text>
-          </View>
-        </>
-      )}
+            <View>
+              <Text
+                style={DailyImageStyles.cardDescription}
+                numberOfLines={textShown ? undefined : 3}
+                onTextLayout={onTextLayout}>
+                {dailyImage.explanation}
+              </Text>
+              {lengthMore ? (
+                <TouchableOpacity
+                  onPress={() => setTextShown(!textShown)}
+                  activeOpacity={0.4}>
+                  <Text style={DailyImageStyles.cardReadMore}>
+                    {textShown ? 'Read less' : 'Read more'}
+                  </Text>
+                </TouchableOpacity>
+              ) : null}
+              <Text style={DailyImageStyles.cardCreator}>
+                created by: {dailyImage.copyright}
+              </Text>
+            </View>
+          </>
+        )}
+      </View>
     </View>
   );
 };
 
 export default DailyImage;
 
-const styles = StyleSheet.create({});
+const DailyImageStyles = StyleSheet.create({
+  container: {
+    alignItems: 'center',
+    marginBottom: 2,
+  },
+  title: {
+    fontSize: 22,
+    fontWeight: 'bold',
+  },
+  subtitle: {
+    fontSize: 14,
+    fontWeight: '300',
+    marginTop: 4,
+  },
+  cardContainer: {
+    backgroundColor: Colors.white,
+    margin: 16,
+    padding: 16,
+    borderRadius: 8,
+    shadowColor: Colors.black,
+    shadowOffset: {
+      width: 0,
+      height: 4,
+    },
+    shadowOpacity: 0.1,
+    shadowRadius: 4,
+    elevation: 4,
+  },
+  cardTitle: {
+    fontSize: 22,
+    fontWeight: 'bold',
+  },
+  cardDate: {
+    fontSize: 14,
+    fontWeight: '300',
+    marginTop: 4,
+  },
+  cardImage: {
+    height: 200,
+    marginHorizontal: -16,
+    marginTop: 16,
+  },
+  cardDescription: {
+    fontSize: 16,
+    fontWeight: '300',
+    marginTop: 16,
+  },
+  cardReadMore: {
+    color: Colors.berkeley,
+    fontWeight: 'bold',
+    lineHeight: 21,
+    marginTop: 2,
+  },
+  cardCreator: {
+    fontSize: 14,
+    fontWeight: '300',
+    marginTop: 2,
+    textAlign: 'right',
+  },
+});
