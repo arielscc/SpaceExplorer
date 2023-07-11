@@ -79,106 +79,51 @@ const WorldEvents = () => {
   return (
     <View>
       {eonetEvents ? (
-        <View style={{margin: 16}}>
-          <View style={{alignItems: 'center', marginBottom: 24}}>
-            <Text
-              style={{
-                fontSize: 22,
-                fontWeight: 'bold',
-              }}>
+        <View style={WorldEventStyles.container}>
+          <View style={WorldEventStyles.header}>
+            <Text style={WorldEventStyles.headerTitle}>
               {eonetEvents.title}
             </Text>
-            <Text
-              style={{
-                fontSize: 14,
-                fontWeight: '300',
-                marginTop: 4,
-              }}>
+            <Text style={WorldEventStyles.headerDescription}>
               {eonetEvents.description}
             </Text>
           </View>
           {eonetEvents.events.map(
             ({categories, geometries, description, id, sources, title}) => {
               return (
-                <View
-                  key={id}
-                  style={{
-                    paddingVertical: 8,
-                    borderBottomWidth: 1,
-                    borderBottomColor: Colors.graystrong,
-                  }}>
-                  <Text
-                    style={{
-                      fontSize: 18,
-                      fontWeight: 'bold',
-                      color: Colors.berkeley,
-                    }}>
-                    {title}
-                  </Text>
+                <View key={id} style={WorldEventStyles.eventsContainer}>
+                  <Text style={WorldEventStyles.eventsTitle}>{title}</Text>
                   {description && <Text>{description}</Text>}
 
-                  <View
-                    key={id}
-                    style={{
-                      flexDirection: 'row',
-                      alignItems: 'center',
-                      justifyContent: 'space-between',
-                    }}>
+                  <View key={id} style={WorldEventStyles.eventDetails}>
                     {categories.map(({id, title}) => {
                       return <Text key={id}>{title}</Text>;
                     })}
-                    <View>
-                      {sources.map(({id, url}) => {
-                        return (
-                          <View key={id} style={{alignItems: 'flex-end'}}>
-                            <Pressable
-                              onPress={() => openUrl(url)}
+                    {sources.map(({id, url}) => {
+                      return (
+                        <View key={id} style={{alignItems: 'flex-end'}}>
+                          <Pressable
+                            onPress={() => openUrl(url)}
+                            style={WorldEventStyles.eventLink}>
+                            <Text
                               style={{
-                                backgroundColor: Colors.cerulean,
-                                paddingHorizontal: 4,
-                                borderRadius: 4,
+                                color: Colors.white,
                               }}>
-                              <Text
-                                style={{
-                                  color: Colors.white,
-                                }}>
-                                {id}
-                              </Text>
-                            </Pressable>
-                          </View>
-                        );
-                      })}
-                    </View>
+                              {id}
+                            </Text>
+                          </Pressable>
+                        </View>
+                      );
+                    })}
                   </View>
 
-                  <View style={{marginTop: 8}}>
-                    <View
-                      style={{
-                        flexDirection: 'row',
-                        justifyContent: 'space-between',
-                        marginTop: 12,
-                      }}>
-                      <Text
-                        style={{
-                          flex: 1,
-                          fontWeight: 'bold',
-                        }}>
-                        date
-                      </Text>
-                      <Text
-                        style={{
-                          flex: 1 / 2,
-                          textAlign: 'left',
-                          fontWeight: 'bold',
-                        }}>
+                  <View style={{marginTop: 12}}>
+                    <View style={WorldEventStyles.columnsContainer}>
+                      <Text style={WorldEventStyles.headerDate}>date</Text>
+                      <Text style={WorldEventStyles.headerLongitude}>
                         longitude
                       </Text>
-                      <Text
-                        style={{
-                          flex: 1 / 2,
-                          textAlign: 'right',
-                          fontWeight: 'bold',
-                        }}>
+                      <Text style={WorldEventStyles.headerLatitude}>
                         latitude
                       </Text>
                     </View>
@@ -190,32 +135,14 @@ const WorldEvents = () => {
                       if (index <= 2 || showItems === id) {
                         return (
                           <View style={{marginTop: 8}} key={index}>
-                            <View
-                              style={{
-                                flexDirection: 'row',
-                                justifyContent: 'space-between',
-                              }}>
-                              <Text
-                                style={{
-                                  flex: 1,
-                                  fontSize: 14,
-                                }}>
+                            <View style={WorldEventStyles.columnsContainer}>
+                              <Text style={WorldEventStyles.contentDate}>
                                 {formatDate(new Date(date))}
                               </Text>
-                              <Text
-                                style={{
-                                  flex: 1 / 2,
-                                  textAlign: 'left',
-                                  fontSize: 14,
-                                }}>
+                              <Text style={WorldEventStyles.contentLongitude}>
                                 {longitude}
                               </Text>
-                              <Text
-                                style={{
-                                  flex: 1 / 2,
-                                  textAlign: 'right',
-                                  fontSize: 14,
-                                }}>
+                              <Text style={WorldEventStyles.contentLatitude}>
                                 {latitude}
                               </Text>
                             </View>
@@ -246,4 +173,73 @@ const WorldEvents = () => {
 
 export default WorldEvents;
 
-const styles = StyleSheet.create({});
+const WorldEventStyles = StyleSheet.create({
+  container: {
+    margin: 16,
+  },
+  header: {
+    alignItems: 'center',
+    marginBottom: 24,
+  },
+  headerTitle: {
+    fontSize: 22,
+    fontWeight: 'bold',
+  },
+  headerDescription: {
+    fontSize: 14,
+    fontWeight: '300',
+    marginTop: 4,
+  },
+  eventsContainer: {
+    borderBottomColor: Colors.graystrong,
+    borderBottomWidth: 1,
+    paddingVertical: 8,
+  },
+  eventsTitle: {
+    color: Colors.berkeley,
+    fontSize: 18,
+    fontWeight: 'bold',
+  },
+  eventDetails: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+  },
+  eventLink: {
+    backgroundColor: Colors.cerulean,
+    borderRadius: 4,
+    paddingHorizontal: 4,
+  },
+  columnsContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
+  headerDate: {
+    flex: 1,
+    fontWeight: 'bold',
+  },
+  headerLongitude: {
+    flex: 1 / 2,
+    fontWeight: 'bold',
+    textAlign: 'left',
+  },
+  headerLatitude: {
+    flex: 1 / 2,
+    textAlign: 'right',
+    fontWeight: 'bold',
+  },
+  contentDate: {
+    flex: 1,
+    fontSize: 14,
+  },
+  contentLongitude: {
+    flex: 1 / 2,
+    textAlign: 'left',
+    fontSize: 14,
+  },
+  contentLatitude: {
+    flex: 1 / 2,
+    textAlign: 'right',
+    fontSize: 14,
+  },
+});
