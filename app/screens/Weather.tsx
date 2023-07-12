@@ -1,11 +1,13 @@
 import React from 'react';
-import {Text, View} from 'react-native';
+import {ScrollView, Text} from 'react-native';
+import {useSafeAreaInsets} from 'react-native-safe-area-context';
 
 const Weather = () => {
+  const {top} = useSafeAreaInsets();
   return (
-    <View>
+    <ScrollView style={{marginTop: top}}>
       <Text>Weather</Text>
-    </View>
+    </ScrollView>
   );
 };
 
